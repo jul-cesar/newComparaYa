@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="newComparaYa.Views.FavsView"
+             Title="Favoritos">
+    <VerticalStackLayout Padding="10">
+        <!-- Título -->
+        <Label 
+            Text="Tus Productos Favoritos"
+            FontSize="24"
+            FontAttributes="Bold"
+            HorizontalOptions="Center" />
+
+        <!-- Lista de Productos Favoritos -->
+        <CollectionView
+            ItemsSource="{Binding Favs}"
+            VerticalOptions="FillAndExpand"
+            Margin="10">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="10" Margin="5" CornerRadius="10" BorderColor="Gray" BackgroundColor="White">
+                        <StackLayout>
+                            <Image
+      Source="{Binding image_url}"
+      Aspect="AspectFit"
+      HeightRequest="130"
+      HorizontalOptions="FillAndExpand" />
+                            <Label
+                                Text="{Binding Nombre}"
+                                FontSize="18"
+                                FontAttributes="Bold"
+                                TextColor="Black" />
+                            <Label
+x:Name="priced1"
+FontFamily="PPI"
+FontSize="14"
+HorizontalOptions="Center"
+HorizontalTextAlignment="Center"
+TextColor="Black">
+                                <Label.Text>
+                                    <Binding Path="price_d1" StringFormat="D1: {0:C}" />
+                                </Label.Text>
+                                <Label.Triggers>
+                                    <DataTrigger
+        Binding="{Binding price_d1}"
+        TargetType="Label"
+        Value="0">
+                                        <Setter Property="IsVisible" Value="False" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+
+                            <Label
+x:Name="priceolim"
+FontFamily="PPI"
+FontSize="14"
+HorizontalOptions="Center"
+HorizontalTextAlignment="Center"
+TextColor="Black">
+                                <Label.Text>
+                                    <Binding Path="price_olim" StringFormat="Olimpica: {0:C}" />
+                                </Label.Text>
+                                <Label.Triggers>
+                                    <DataTrigger
+        Binding="{Binding price_olim}"
+        TargetType="Label"
+        Value="0">
+                                        <Setter Property="IsVisible" Value="False" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+
+                            <Label
+    x:Name="priceexito"
+    FontFamily="PPI"
+    FontSize="14"
+    HorizontalOptions="CenterAndExpand"
+    TextColor="Black"
+    VerticalOptions="End"
+    VerticalTextAlignment="Center">
+                                <Label.Text>
+                                    <Binding Path="price_exito" StringFormat="Exito: {0:C}" />
+                                </Label.Text>
+                                <Label.Triggers>
+                                    <DataTrigger
+        Binding="{Binding price_exito}"
+        TargetType="Label"
+        Value="0">
+                                        <Setter Property="IsVisible" Value="False" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>

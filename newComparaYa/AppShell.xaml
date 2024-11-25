@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="newComparaYa.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:newComparaYa.Views"
+    Shell.FlyoutBehavior="Disabled"
+    Title="newComparaYa">
+
+    <TabBar>
+        <Tab  Icon="product.png">
+
+            <ShellContent
+        Title="Products"
+             
+        ContentTemplate="{DataTemplate local:ProductsView}"
+        Route="products" />
+        </Tab>
+
+        <Tab  Icon="user.png">
+
+            <ShellContent
+        Title="User"
+         
+        ContentTemplate="{DataTemplate local:UserView}"
+        Route="user" />
+        </Tab>
+
+        <Tab  Icon="cart.png">
+
+            <ShellContent
+    Title="Cart"
+         
+    ContentTemplate="{DataTemplate local:CartView}"
+    Route="cart" /> 
+        </Tab>
+
+
+        <Tab  Icon="https://cdn-icons-png.flaticon.com/512/1077/1077035.png">
+
+            <ShellContent
+    Title="Cart"
+         
+    ContentTemplate="{DataTemplate local:FavsView}"
+    Route="favs" />
+        </Tab>
+    </TabBar>
+
+    <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate local:LoginView}"
+        Route="login" />
+
+    <ShellContent
+   Title="Register"
+   ContentTemplate="{DataTemplate local:RegisterView}"
+   Route="register" />
+
+</Shell>

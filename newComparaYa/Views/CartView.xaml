@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="newComparaYa.Views.CartView"
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+             Shell.NavBarIsVisible="False"
+             Title="Carrito de Compras">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <FlexLayout Grid.Row="0" AlignItems="Center" JustifyContent="Center" BackgroundColor="#F8F8F8" Padding="10">
+            <skia:SKLottieView
+                x:Name="backcart"
+                Source="back.json"
+                HeightRequest="40"
+                IsVisible="false"
+                WidthRequest="40" />
+            <Label
+                Text="Carrito de Compras"
+                FontFamily="PPI"
+                FontSize="22"
+                TextColor="Black"
+                HorizontalOptions="Center"
+                Margin="10,0,0,0" />
+        </FlexLayout>
+
+        <!-- Lista de Productos -->
+        <CollectionView
+            Grid.Row="1"
+            Margin="10,5,10,10"
+            ItemsSource="{Binding CartProducts}"
+            BackgroundColor="White"
+            VerticalOptions="FillAndExpand">
+            <CollectionView.EmptyView>
+                <StackLayout VerticalOptions="CenterAndExpand" Padding="20">
+                    <skia:SKLottieView
+                        x:Name="empty"
+                        Source="empty.json"
+                        HeightRequest="100"
+                        WidthRequest="100"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center" />
+                    <Label
+                        Margin="20"
+                        FontFamily="PP"
+                        FontSize="18"
+                        HorizontalTextAlignment="Center"
+                        Text="No hay productos en el carrito"
+                        TextColor="DimGray" />
+                </StackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="10" RowSpacing="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Imagen del Producto -->
+                        <Image
+                            Grid.Column="0"
+                            Margin="5"
+                            Aspect="AspectFit"
+                            HeightRequest="100"
+                            Source="{Binding image_url}"
+                            WidthRequest="100" />
+
+                        <!-- Información del Producto -->
+                        <StackLayout Grid.Column="1" Spacing="5" Padding="5">
+                            <Label
+                                Text="{Binding name}"
+                                FontSize="16"
+                                FontFamily="PP"
+                                TextColor="Black"
+                                LineBreakMode="TailTruncation" />
+                            <Label
+                                Text="{Binding DisplayPrice}"
+                                FontSize="14"
+                                FontFamily="PP"
+                                TextColor="Gray" />
+
+                            <!-- Botones de Cantidad -->
+                            <FlexLayout Direction="Row" JustifyContent="SpaceBetween" AlignItems="Center" Margin="0,10,0,0">
+                                <Button
+                                    Text="-"
+                                    FontSize="18"
+                                    TextColor="Black"
+                                    WidthRequest="40"
+                                    HeightRequest="40"
+                                    BackgroundColor="#F2F2F2"
+                                    BorderWidth="1"
+                                    BorderColor="Gray"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DecreaseQuantityCommand}"
+                                    CommandParameter="{Binding .}" />
+                                <Label
+                                    Text="{Binding Cantidad}"
+                                    FontSize="18"
+                                    TextColor="Black"
+                                    HorizontalOptions="Center" />
+                                <Button
+                                    Text="+"
+                                    FontSize="18"
+                                    TextColor="Black"
+                                    WidthRequest="40"
+                                    HeightRequest="40"
+                                    BackgroundColor="#F2F2F2"
+                                    BorderWidth="1"
+                                    BorderColor="Gray"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IncreaseQuantityCommand}"
+                                    CommandParameter="{Binding .}" />
+                            </FlexLayout>
+                        </StackLayout>
+
+                        <!-- Botón Eliminar -->
+                        <Button
+                            Grid.Column="2"
+                            Text="X"
+                            FontSize="18"
+                            TextColor="Black"
+                            WidthRequest="40"
+                            HeightRequest="40"
+                            BackgroundColor="#FF4D4D"
+                            BorderWidth="1"
+                            BorderColor="Gray"
+                            CornerRadius="20"
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RemoveProductCommand}"
+                            CommandParameter="{Binding .}" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Totales -->
+        <Frame
+            Grid.Row="2"
+            Margin="15"
+            Padding="15"
+            BackgroundColor="#F4F4F4"
+            CornerRadius="10"
+            VerticalOptions="End">
+            <StackLayout>
+                <Label
+                    Text="Totales"
+                    FontFamily="PPI"
+                    FontSize="20"
+                    TextColor="Black"
+                    HorizontalOptions="Center" />
+                <BoxView BackgroundColor="Gray" HeightRequest="1" Margin="0,5,0,10" />
+
+                <!-- Totales por Tienda -->
+                <FlexLayout JustifyContent="SpaceBetween" Margin="0,5">
+                    <Label Text="Total Exito:" FontAttributes="Bold" FontSize="16" TextColor="Black" />
+                    <Label Text="{Binding TotalExito}" FontSize="16" TextColor="Black" />
+                </FlexLayout>
+                <FlexLayout JustifyContent="SpaceBetween" Margin="0,5">
+                    <Label Text="Total D1:" FontAttributes="Bold" FontSize="16" TextColor="Black" />
+                    <Label Text="{Binding TotalD1}" FontSize="16" TextColor="Black" />
+                </FlexLayout>
+                <FlexLayout JustifyContent="SpaceBetween" Margin="0,5">
+                    <Label Text="Total Olimpica:" FontAttributes="Bold" FontSize="16" TextColor="Black" />
+                    <Label Text="{Binding TotalOlimpica}" FontSize="16" TextColor="Black" />
+                </FlexLayout>
+
+                <!-- Total Neto -->
+                <BoxView BackgroundColor="Gray" HeightRequest="1" Margin="0,10,0,10" />
+                <FlexLayout JustifyContent="SpaceBetween">
+                    <Label Text="TOTAL:" FontFamily="PPI" FontSize="22" TextColor="Black" />
+                    <Label Text="{Binding TotalNet}" FontSize="22" TextColor="Black" />
+                </FlexLayout>
+            </StackLayout>
+        </Frame>
+    </Grid>
+</ContentPage>

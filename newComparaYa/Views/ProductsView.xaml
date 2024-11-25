@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+             x:Class="newComparaYa.Views.ProductsView"
+             Shell.NavBarIsVisible="False"
+             Title="Explora Productos"
+             Padding="15"
+             BackgroundColor="White">
+    <Grid RowSpacing="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Header con más padding y espaciado -->
+        <FlexLayout Grid.Row="0" 
+                    AlignItems="Center" 
+                    JustifyContent="SpaceBetween" 
+                    Padding="15,25,15,15" 
+                    BackgroundColor="#F8F8F8"
+                    Margin="0,0,0,10">
+            <Label
+                FontFamily="PPI"
+                FontSize="24"
+
+                Text="Explora Productos"
+                TextColor="Black"
+                HorizontalOptions="Start" />
+            <Button
+     BackgroundColor="White"
+     BorderColor="Gray"
+     BorderWidth="2"
+     Command="{Binding OpenFiltersCommand}"
+     CornerRadius="20"
+     FontFamily="PPI"
+     Text="Filtros"
+     Padding="15,8"
+     TextColor="Black" />
+
+            
+        </FlexLayout>
+
+        <!-- Categorías con más espacio entre elementos -->
+        <CollectionView
+            Grid.Row="1"
+            Margin="0,5,0,15"
+            SelectionChangedCommand="{Binding SelectionCategoryCommand}"
+            SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"
+            SelectionMode="Single"
+            BackgroundColor="Transparent"
+            ItemsSource="{Binding CategoriesList}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Button
+                        InputTransparent="True"
+                        Margin="3"
+                        Padding="15,8"
+                        BackgroundColor="White"
+                        BorderColor="Gray"
+                        BorderWidth="2"
+                        CornerRadius="20"
+                        HeightRequest="45"
+                        Text="{Binding name}"
+                        TextColor="#020202" />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Barra de Búsqueda con más espacio -->
+        <FlexLayout Grid.Row="2" 
+                    AlignItems="Center" 
+                    Direction="Column" 
+                    JustifyContent="Center" 
+                    Margin="0,5,0,15">
+            <SearchBar
+                Text="{Binding SearchQuery}"
+                SearchCommand="{Binding SearchCommand}"
+                Placeholder="Ej: Arroz"
+                PlaceholderColor="#9E9E9E"
+                TextColor="Black"
+                CancelButtonColor="#757575"
+                HeightRequest="55"
+                Margin="0,5"
+                HorizontalOptions="FillAndExpand" />
+        </FlexLayout>
+
+        <!-- Lista de Productos con más espacio entre items -->
+        <CollectionView
+            Grid.Row="3"
+            Margin="0,5,0,10"
+            x:Name="cvPro"
+            ItemsSource="{Binding ProductsList}"
+            BackgroundColor="White"
+            VerticalOptions="FillAndExpand">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout 
+                    HorizontalItemSpacing="15" 
+                    VerticalItemSpacing="20" 
+                    Orientation="Vertical" 
+                    Span="2" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.EmptyView>
+                <StackLayout VerticalOptions="CenterAndExpand" Spacing="15">
+                    <skia:SKLottieView
+                        Source="emptysearch.json"
+                        HeightRequest="120"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        WidthRequest="120" />
+                    <Label
+                        Margin="15"
+                        FontFamily="PP"
+                        FontSize="18"
+                        Text="No se encontraron productos."
+                        TextColor="DimGray"
+                        HorizontalTextAlignment="Center" />
+                </StackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Margin="8" 
+                               Padding="10" 
+                               BackgroundColor="#FFFFFF"
+                               Spacing="10">
+                        <Image
+                            Source="{Binding image_url}"
+                            Aspect="AspectFit"
+                            HeightRequest="130"
+                            HorizontalOptions="FillAndExpand" />
+                        <Label
+                            Text="{Binding name}"
+                            FontSize="16"
+                            TextColor="#4A4A4A"
+                            HorizontalTextAlignment="Center"
+                            Margin="0,5" />
+                        <Label
+      x:Name="priced1"
+      FontFamily="PPI"
+      FontSize="14"
+      HorizontalOptions="Center"
+      HorizontalTextAlignment="Center"
+      TextColor="Black">
+                            <Label.Text>
+                                <Binding Path="price_d1" StringFormat="D1: {0:C}" />
+                            </Label.Text>
+                            <Label.Triggers>
+                                <DataTrigger
+              Binding="{Binding price_d1}"
+              TargetType="Label"
+              Value="0">
+                                    <Setter Property="IsVisible" Value="False" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+
+                        <Label
+      x:Name="priceolim"
+      FontFamily="PPI"
+      FontSize="14"
+      HorizontalOptions="Center"
+      HorizontalTextAlignment="Center"
+      TextColor="Black">
+                            <Label.Text>
+                                <Binding Path="price_olim" StringFormat="Olimpica: {0:C}" />
+                            </Label.Text>
+                            <Label.Triggers>
+                                <DataTrigger
+              Binding="{Binding price_olim}"
+              TargetType="Label"
+              Value="0">
+                                    <Setter Property="IsVisible" Value="False" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+
+                        <Label
+          x:Name="priceexito"
+          FontFamily="PPI"
+          FontSize="14"
+          HorizontalOptions="CenterAndExpand"
+          TextColor="Black"
+          VerticalOptions="End"
+          VerticalTextAlignment="Center">   
+                            <Label.Text>
+                                <Binding Path="price_exito" StringFormat="Exito: {0:C}" />
+                            </Label.Text>
+                            <Label.Triggers>
+                                <DataTrigger
+              Binding="{Binding price_exito}"
+              TargetType="Label"
+              Value="0">
+                                    <Setter Property="IsVisible" Value="False" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <FlexLayout>
+                            <Button
+                     Text="♡"
+                     FontSize="14"
+                     TextColor="Black"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AddFavCommand}"
+ CommandParameter="{Binding .}"
+                     BackgroundColor="#F2F2F2"
+                     CornerRadius="20"
+                     Padding="15,8"
+                     Margin="0,5" />        
+                            <Button
+                     Text="+"
+                     FontSize="14"
+                     TextColor="Black"
+                     Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AddProductCommand}"
+                     CommandParameter="{Binding .}"
+                     BackgroundColor="#F2F2F2"
+                     CornerRadius="20"
+                     Padding="15,8"
+                     Margin="0,5" />            
+                            <skia:SKLottieView
+                             x:Name="xd"
+                             Source="lupa2.json"
+                             HeightRequest="60"
+                             HorizontalOptions="Center"
+                             RepeatCount="3"
+                             VerticalOptions="Center"
+                             WidthRequest="60">     
+                            <skia:SKLottieView.GestureRecognizers>
+                              <TapGestureRecognizer
+                         Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.CompareCommand}"
+                         CommandParameter="{Binding id}" /> 
+                                </skia:SKLottieView.GestureRecognizers>
+                            </skia:SKLottieView>
+                        </FlexLayout>
+                       
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

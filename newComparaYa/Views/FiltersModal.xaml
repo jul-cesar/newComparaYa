@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopup:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="newComparaYa.Views.FiltersModal"
+             xmlns:mopup="clr-namespace:Mopups.Pages;assembly=Mopups"
+             Title="FiltersModal" >
+    <Grid Margin="20" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Padding="20" WidthRequest="400" HeightRequest="700" BackgroundColor="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="90" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="90" />
+            <RowDefinition Height="90" />
+        </Grid.RowDefinitions>
+        <Label
+         Grid.Row="0"
+         Margin="17"
+         FontFamily="PPI"
+         HorizontalTextAlignment="Center"
+         Text="Filtros"
+         TextColor="Black"
+         VerticalTextAlignment="Center" />
+        <Label
+         Grid.Row="1"
+         Margin="10"
+         FontFamily="PPI"
+         FontSize="17"
+         Text="Precios hasta:"
+         TextColor="Black" />
+        <CollectionView
+    Grid.Row="2"
+    Margin="5"
+    BackgroundColor="Transparent"
+    ItemsSource="{Binding Items}"
+    SelectionMode="Single"
+            SelectedItem="{Binding SelectedPrice, Mode=TwoWay}"
+    SelectionChangedCommand="{Binding PriceFilterSelectedCommand}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Horizontal" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <FlexLayout Margin="5,3,5,3" BackgroundColor="Transparent">
+                        <Button
+                            InputTransparent="True"
+                    BackgroundColor="White"
+                    BorderColor="Gray"
+                    BorderWidth="2"
+                    CornerRadius="13"
+                    HeightRequest="42"
+                    Text="{Binding .}"
+                    TextColor="#020202" />
+                    </FlexLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <StackLayout
+         Grid.Row="5"
+         HorizontalOptions="CenterAndExpand"
+         VerticalOptions="EndAndExpand">
+          
+        </StackLayout>
+    </Grid>
+
+</mopup:PopupPage>

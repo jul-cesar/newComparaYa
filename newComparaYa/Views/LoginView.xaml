@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="newComparaYa.Views.LoginView"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False"
+             Title="LoginView">
+    <Grid Padding="20,50,20,20">
+
+        <!-- Main Content -->
+        <StackLayout
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="Center"
+            Spacing="20">
+
+            <!-- App Logo -->
+            <Image
+                Margin="0,0,0,20"
+                Aspect="AspectFit"
+                HeightRequest="250"
+                Source="logohd.png"
+                WidthRequest="250" />
+
+            <!-- Title -->
+            <Label
+                Margin="0,0,0,10"
+                FontAttributes="Bold"
+                FontSize="22"
+                HorizontalTextAlignment="Center"
+                Text="Iniciar Sesión"
+                TextColor="Black" />
+
+            <!-- Error Message -->
+            <Label
+                Margin="0,0,0,10"
+                FontSize="14"
+                Text="{Binding ErrorMessage}"
+                TextColor="Red"
+                HorizontalTextAlignment="Center"
+                IsVisible="{Binding IsErrorVisible}" />
+
+            <!-- Email Entry -->
+            <Frame
+                BackgroundColor="#F7F7F7"
+                CornerRadius="8"
+                Padding="12"
+                HasShadow="False"
+                BorderColor="#E0E0E0">
+                <Entry
+                    Text="{Binding EmailEntry}"
+                    Keyboard="Email"
+                    Placeholder="Correo Electrónico"
+                    PlaceholderColor="#A0A0A0"
+                    TextColor="Black" />
+            </Frame>
+
+            <!-- Password Entry -->
+            <Frame
+                BackgroundColor="#F7F7F7"
+                CornerRadius="8"
+                Padding="12"
+                HasShadow="False"
+                BorderColor="#E0E0E0">
+                <Entry
+                    Text="{Binding PasswordEntry}"
+                    IsPassword="True"
+                    Placeholder="Contraseña"
+                    PlaceholderColor="#A0A0A0"
+                    TextColor="Black" />
+            </Frame>
+
+            <!-- Login Button -->
+            <Button
+                Margin="0,20,0,0"
+                Text="Ingresar"
+                Command="{Binding LoginUserCommand}"
+                BackgroundColor="Black"
+                TextColor="White"
+                FontAttributes="Bold"
+                CornerRadius="8"
+                Padding="15" />
+
+            <!-- Register Option -->
+            <StackLayout
+                HorizontalOptions="Center"
+                Orientation="Horizontal"
+                Spacing="5">
+                <Label Text="¿No tienes una cuenta?" TextColor="Black" />
+             
+                    <Button Text="Registrate" TextColor="Black" BackgroundColor="Transparent" Command="{Binding ToRegisterCommand}" />
+              
+            </StackLayout>
+        </StackLayout>
+
+        <!-- Loading Overlay -->
+        <Grid x:Name="LoadingOverlay" IsVisible="{Binding IsLoading}">
+            <BoxView Opacity="0.8" Color="White" />
+            <ActivityIndicator IsRunning="True" Color="Black" VerticalOptions="Center" />
+        </Grid>
+    </Grid>
+</ContentPage>
